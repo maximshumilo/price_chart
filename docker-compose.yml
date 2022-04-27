@@ -1,0 +1,50 @@
+services:
+
+  api:
+    image: price_graph_api
+    container_name: price_graph_api
+    build:
+      context: backend
+      dockerfile: api/Dockerfile
+    env_file: .env
+    depends_on:
+      - postgres
+      - redis
+
+  worker:
+    image: price_graph_worker
+    container_name: price_graph_worker
+    build:
+      context: backend
+      dockerfile: worker/Dockerfile
+
+    env_file: .env
+    depends_on:
+      - postgres
+      - redis
+
+  frontend:
+    image: price_graph_frontend
+    container_name: price_graph_frontend
+    build:
+      context: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+      - worker
+
+  postgres:
+    container_name: price_graph_postgres
+    image: postgres:latest
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file: .env
+
+  redis:
+    container_name: price_graph_redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
