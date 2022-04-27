@@ -59,3 +59,4 @@ class PriceMovement(Task):
         while True:
             self._update_price()
             sleep(1)
+            self._logger.debug('Task is running. Successfully updated prices.')

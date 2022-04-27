@@ -30,7 +30,7 @@ async def send_text_callback(message: str, client: WebSocket):
     await client.send_text(message)
 
 
-@trade_tool_router.websocket("/ws")
+@trade_tool_router.websocket("/{trade_tool_id}/ws")
 async def websocket_endpoint(websocket: WebSocket, trade_tool_id: int):
     """Websocket"""
     await websocket.accept()
@@ -38,5 +38,5 @@ async def websocket_endpoint(websocket: WebSocket, trade_tool_id: int):
         try:
             await listener.listen(trade_tool_id, send_text_callback, websocket)
         except ConnectionClosedOK:
-            print(f'Closed {websocket.client.port}')
+            pass
         await sleep(1)
