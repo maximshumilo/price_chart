@@ -5,7 +5,7 @@ class WsClient {
     }
 
     connect = () => {
-        this.ws = new WebSocket('ws://localhost:5000/trade-tool/1/ws')
+        this.ws = new WebSocket('ws://localhost:80/trade-tool/1/ws')
 
         this.ws.onopen = () => {
             console.log('connected')
