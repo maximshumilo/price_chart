@@ -52,7 +52,7 @@ class RedisListener:
     redis: Redis
 
     def __init__(self):
-        self.redis = Redis.from_url("redis://localhost", max_connections=10, decode_responses=True)
+        self.redis = Redis.from_url(f"redis://{config.REDIS_HOST}", max_connections=10, decode_responses=True)
 
     @staticmethod
     async def _listener(channel: PubSub, callback, *args) -> None:

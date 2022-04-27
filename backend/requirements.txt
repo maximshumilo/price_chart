@@ -1,7 +1,6 @@
 fastapi==0.75.2
-uvicorn==0.17.6
+uvicorn[standard]==0.17.6
 pytest==7.1.2
-websockets==10.3
 psycopg2-binary==2.9.3
 python-dotenv==0.20.0
 redis==4.2.2

@@ -1,4 +1,4 @@
-FROM python:3.9-alpine
+FROM python:3.9-slim
 
 COPY worker /usr/src/app/worker
 COPY utils /usr/src/app/utils
