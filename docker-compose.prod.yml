@@ -3,9 +3,6 @@ services:
   api:
     image: price_graph_api
     container_name: price_graph_api
-    build:
-      context: backend
-      dockerfile: api/Dockerfile
     env_file: .env
     depends_on:
       - postgres
@@ -14,10 +11,6 @@ services:
   worker:
     image: price_graph_worker
     container_name: price_graph_worker
-    build:
-      context: backend
-      dockerfile: worker/Dockerfile
-
     env_file: .env
     depends_on:
       - postgres
@@ -26,8 +19,6 @@ services:
   frontend:
     image: price_graph_frontend
     container_name: price_graph_frontend
-    build:
-      context: frontend
     ports:
       - "80:80"
     depends_on:
