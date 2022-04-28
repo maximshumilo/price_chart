@@ -1,6 +1,6 @@
-from .app import fastapi_app
+from .app import create_app
 
 
 __all__ = [
-    'fastapi_app'
+    'create_app'
 ]
