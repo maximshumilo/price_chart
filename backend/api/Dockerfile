@@ -8,8 +8,9 @@ COPY requirements.txt /usr/src/app/requirements.txt
 ENV PYTHONPATH=/usr/src/app
 WORKDIR /usr/src/app
 
-RUN pip install --upgrade pip
-RUN pip install -r /usr/src/app/requirements.txt
+RUN chmod +x api/docker-entrypoint.sh && \
+    pip install --upgrade pip && \
+    pip install -r requirements.txt
 
 EXPOSE 5000
-CMD python api/main.py
+ENTRYPOINT ["/usr/src/app/api/docker-entrypoint.sh"]

@@ -35,7 +35,7 @@ class RedisPublisher:
         None
         """
         subs = dict(self.redis.pubsub_numsub(name))
-        if subs.get(str(name), 0) > 1:
+        if subs.get(str(name), 0) >= 1:
             self.redis.publish(name, message)
 
 
@@ -73,6 +73,7 @@ class RedisListener:
             try:
                 async with async_timeout.timeout(1):
                     message = await channel.get_message(ignore_subscribe_messages=True)
+                    print(message)
                     if message is not None:
                         await callback(message["data"], *args)
                     await asyncio.sleep(0.01)

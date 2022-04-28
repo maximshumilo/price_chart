@@ -2,6 +2,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from inspect import getmembers, isclass
 from typing import List
 
+from utils.db.models import migrate
 from worker import tasks
 from worker.tasks.base_model import Task
 
@@ -34,5 +35,6 @@ class Worker:
 
 
 if __name__ == '__main__':
+    migrate()
     worker = Worker()
     worker.run()

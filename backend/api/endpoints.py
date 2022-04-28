@@ -3,7 +3,7 @@ from logging import Logger, getLogger
 from fastapi import APIRouter
 from fastapi import HTTPException
 from starlette.websockets import WebSocket, WebSocketState
-from websockets.exceptions import ConnectionClosedError
+from websockets.exceptions import ConnectionClosedError, ConnectionClosedOK
 
 from api.schemas import TradeToolsResponse, PriceHistoryResponse
 from utils.db.models import TradeTool, PriceHistory
@@ -41,5 +41,5 @@ async def websocket_endpoint(websocket: WebSocket, trade_tool_id: int):
     await websocket.accept()
     try:
         await listener.listen(trade_tool_id, send_text_callback, websocket)
-    except ConnectionClosedError:
+    except (ConnectionClosedOK, ConnectionClosedError):
         ws_logger.info(f"WS client disconnected {websocket.client}")
