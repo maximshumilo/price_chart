@@ -14,4 +14,12 @@ export default class API {
         return response.data
     }
 
+    async get_all_trade_tools() {
+        const response = await this.axios.get('/trade-tool/')
+            .catch((error) => {
+                throw error
+            })
+        return response.data
+    }
+
 }

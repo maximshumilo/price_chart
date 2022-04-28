@@ -1,11 +1,16 @@
 class WsClient {
-    constructor(onMessage) {
-        this.onMessage = onMessage
-        this.connect()
+    set_on_message = (callback) => {
+        this.onMessage = callback
     }
 
-    connect = () => {
-        const url = (process.env.NODE_ENV === "development" ? 'ws://localhost:5000/trade-tool/1/ws' : 'ws://localhost:80/trade-tool/1/ws')
+    disconnect = () => {
+        if (this.ws != null) {
+            this.ws.close()
+        }
+    }
+
+    connect = (trade_tool_id) => {
+        const url = (process.env.NODE_ENV === "development" ? `ws://localhost:5000/trade-tool/${trade_tool_id}/ws` : 'ws://localhost:80/trade-tool/1/ws')
         this.ws = new WebSocket(url)
 
         this.ws.onopen = () => {

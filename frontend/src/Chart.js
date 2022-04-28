@@ -23,13 +23,15 @@ class MyChart extends Component {
                 chart.update();
             }
         }
-        new WsClient(onMessage);
+        this.state.ws_client.set_on_message(onMessage)
+
+        // new WsClient(onMessage, this.state);
     }
 
     render() {
         const data = {
             datasets: [{
-                label: "My ticker",
+                label: this.state.active_trade_tool.name,
                 fill: false,
                 lineTension: 0,
                 borderColor: 'rgb(255, 99, 132)',
