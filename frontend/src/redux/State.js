@@ -19,7 +19,7 @@ let store = {
         console.log('State changed.')
     },
     saveHistory(history) {
-        this._state.history = history
+        this._state.history = history.items
         this.rerenderApp(this._state)
     },
 }

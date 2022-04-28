@@ -5,7 +5,8 @@ class WsClient {
     }
 
     connect = () => {
-        this.ws = new WebSocket('ws://localhost:80/trade-tool/1/ws')
+        const url = (process.env.NODE_ENV === "development" ? 'ws://localhost:5000/trade-tool/1/ws' : 'ws://localhost:80/trade-tool/1/ws')
+        this.ws = new WebSocket(url)
 
         this.ws.onopen = () => {
             console.log('connected')
