@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class TradeTool(BaseModel):
-    _id: int = Field(alias='id')
+    id: int
     name: str
     last_price: int
     last_update_price: datetime
@@ -16,7 +16,7 @@ class TradeToolsResponse(BaseModel):
 
     def __init__(self, **kwargs):
         kwargs['items'] = [item.__dict__ for item in kwargs['items']]
-        super().__init__(**kwargs)
+        super(TradeToolsResponse, self).__init__(**kwargs)
 
 
 class PriceHistory(BaseModel):

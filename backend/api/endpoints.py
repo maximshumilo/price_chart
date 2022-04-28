@@ -1,14 +1,15 @@
-from asyncio import sleep
+from logging import Logger, getLogger
 
 from fastapi import APIRouter
 from fastapi import HTTPException
-from starlette.websockets import WebSocket
-from websockets.exceptions import ConnectionClosedOK
+from starlette.websockets import WebSocket, WebSocketState
+from websockets.exceptions import ConnectionClosedError
 
 from api.schemas import TradeToolsResponse, PriceHistoryResponse
 from utils.db.models import TradeTool, PriceHistory
 from utils.redis import listener
 
+ws_logger: Logger = getLogger('WSLogger')
 trade_tool_router = APIRouter(prefix="/trade-tool", responses={404: {"description": "Not found"}})
 
 
@@ -28,6 +29,9 @@ def get_price_history(trade_tool_id: int):
 
 async def send_text_callback(message: str, client: WebSocket):
     """Callback for return data to ws client."""
+    if client.client_state == WebSocketState.DISCONNECTED:
+        ws_logger.info(f"WS client disconnected {client.client}")
+        return
     await client.send_text(message)
 
 
@@ -35,9 +39,7 @@ async def send_text_callback(message: str, client: WebSocket):
 async def websocket_endpoint(websocket: WebSocket, trade_tool_id: int):
     """Websocket"""
     await websocket.accept()
-    while True:
-        try:
-            await listener.listen(trade_tool_id, send_text_callback, websocket)
-        except ConnectionClosedOK:
-            pass
-        await sleep(1)
+    try:
+        await listener.listen(trade_tool_id, send_text_callback, websocket)
+    except ConnectionClosedError:
+        ws_logger.info(f"WS client disconnected {websocket.client}")

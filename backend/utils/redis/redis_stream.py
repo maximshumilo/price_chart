@@ -21,7 +21,7 @@ class RedisPublisher:
     def __init__(self):
         self.redis = StrictRedis(config.REDIS_HOST, charset="utf-8", decode_responses=True)
 
-    def publish(self, name: str, message: Any) -> None:
+    def publish(self, name: int, message: Any) -> None:
         """
         Method for publish message to channel.
 
