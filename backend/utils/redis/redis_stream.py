@@ -73,7 +73,6 @@ class RedisListener:
             try:
                 async with async_timeout.timeout(1):
                     message = await channel.get_message(ignore_subscribe_messages=True)
-                    print(message)
                     if message is not None:
                         await callback(message["data"], *args)
                     await asyncio.sleep(0.01)

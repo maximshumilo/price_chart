@@ -21,6 +21,6 @@ class Task:
 
     def start(self):
         """Starting task. Executing private method `_start`."""
-        self._logger.info(f'Started task')
+        self._logger.info('Started task')
         self._start()
-        self._logger.info(f'Finished task')
+        self._logger.info('Finished task')

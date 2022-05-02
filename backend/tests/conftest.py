@@ -17,4 +17,3 @@ def test_client() -> TestClient:
 @pytest.fixture
 def task_price_movement() -> PriceMovement:
     return PriceMovement()
-
